@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import { SectionList, Text, View } from 'react-native';
 
@@ -38,14 +39,53 @@ export default class MatchesScreen extends React.Component {
 	}
 
 	/**
+	 * Renders a league section
+	 * @param {Object} obj Render item
+	 * @returns {Object} Section template
+	 */
+	renderLeague = (obj) => {
+		const league = obj.section;
+		return (
+			<View>
+				<View>
+					<Text>{league.league_country}</Text>
+				</View>
+				<View>
+					<Text>{league.league_name}</Text>
+				</View>
+			</View>
+		);
+	};
+
+	/**
+	 * Renders a single match item
+	 * @param {Object} obj Render item 
+	 * @returns {Object} Item template
+	 */
+	renderMatch = (obj) => {
+		const match = obj.item;
+		return (
+			<View>
+				<View>
+					<Text>{match.homeTeam}</Text>
+					<Text>{match.awayTeam}</Text>
+				</View>
+				<View>
+					<Text>{moment.unix(match.event_timestamp).format('DD.MM HH:mm')}</Text>
+				</View>
+			</View>
+		);
+	};
+
+	/**
 	 * Renders template
+	 * @returns {Object} Template
 	 */
 	render() {
-		
 		const sections = [
 			{
 				league_id: 94,
-				league_country: 'England',
+				league_country: 'Italy',
 				league_country_code: 'IT',
 				league_name: 'Serie A',
 				data: [
@@ -54,27 +94,18 @@ export default class MatchesScreen extends React.Component {
 						awayTeam: 'Cagliari',
 						homeTeam_id: 492,
 						awayTeam_id: 490,
-						event_timestamp: 1557061200
+						event_timestamp: 1557339677
 					}
 				]
 			}
 		];
 
-		console.log(sections);
-
 		return (
 			<View>
-				<Text>MatchesScreen</Text>
 				<SectionList
-					renderItem={({item, index, section}) => <Text key={index}>{item}</Text>}
-					renderSectionHeader={({section: {title}}) => (
-						<Text style={{fontWeight: 'bold'}}>{title}</Text>
-					)}
-					sections={[
-						{title: 'Title1', data: ['item1', 'item2']},
-						{title: 'Title2', data: ['item3', 'item4']},
-						{title: 'Title3', data: ['item5', 'item6']},
-					]}
+					renderItem={this.renderMatch}
+					renderSectionHeader={this.renderLeague}
+					sections={sections}
 				/>
 			</View>
 		);
