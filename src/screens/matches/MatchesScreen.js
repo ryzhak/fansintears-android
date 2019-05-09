@@ -1,9 +1,10 @@
 import moment from 'moment';
 import React from 'react';
-import { SectionList, Text, View } from 'react-native';
+import { Image, SectionList, Text, View } from 'react-native';
 
 import config from 'config/config'
 import FansInTearsApi from 'library/networking/FansInTearsApi';
+import styles from './styles';
 
 /**
  * Component renders a list of nearest matches and makes redirect to telegram chats
@@ -31,7 +32,7 @@ export default class MatchesScreen extends React.Component {
 	 */
 	async componentDidMount() {
 		try {
-			const matches = await FansInTearsApi.getFixtures(1557014400);
+			const matches = await FansInTearsApi.getFixtures(1557014400); // TODO: remove timestamp
 			this.setState({matches});
 		} catch (err) {
 			console.error(err);
@@ -45,14 +46,14 @@ export default class MatchesScreen extends React.Component {
 	 */
 	renderLeague = (obj) => {
 		const league = obj.section;
+		const imgCountryFlagSrc = require('../../res/images/country_flags/it.png');
+		const imgLeagueLogoSrc = require('../../res/images/league_logos/94.png');
 		return (
-			<View>
-				<View>
-					<Text>{league.league_country}</Text>
-				</View>
-				<View>
-					<Text>{league.league_name}</Text>
-				</View>
+			<View style={styles.sectionContainer}>
+				<Image style={styles.sectionCountryFlag} source={imgCountryFlagSrc} resizeMode='contain'/>
+				<Text style={styles.sectionText}>{league.league_country}</Text>
+				<Image style={styles.sectionLeagueLogo} source={imgLeagueLogoSrc} resizeMode='contain'/>
+				<Text style={styles.sectionText}>{league.league_name}</Text>
 			</View>
 		);
 	};
@@ -64,14 +65,22 @@ export default class MatchesScreen extends React.Component {
 	 */
 	renderMatch = (obj) => {
 		const match = obj.item;
+		const imgHomeTeamSrc = require('../../res/images/club_logos/492.png');
+		const imgAwayTeamSrc = require('../../res/images/club_logos/490.png');
 		return (
-			<View>
-				<View>
-					<Text>{match.homeTeam}</Text>
-					<Text>{match.awayTeam}</Text>
+			<View style={styles.matchContainer}>
+				<View style={styles.matchTeamsContainer}>
+					<View style={styles.matchTeamContainer}>
+						<Image style={styles.matchTeamLogo} source={imgHomeTeamSrc} resizeMode='contain'/>
+						<Text>{match.homeTeam}</Text>
+					</View>
+					<View style={styles.matchTeamContainer}>
+						<Image style={styles.matchTeamLogo} source={imgAwayTeamSrc} resizeMode='contain'/>
+						<Text>{match.awayTeam}</Text>
+					</View>
 				</View>
-				<View>
-					<Text>{moment.unix(match.event_timestamp).format('DD.MM HH:mm')}</Text>
+				<View style={styles.matchDateContainer}>
+					<Text style={styles.matchDateText}>{moment.unix(match.event_timestamp).format('DD.MM HH:mm')}</Text>
 				</View>
 			</View>
 		);
