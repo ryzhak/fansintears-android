@@ -15,6 +15,10 @@ export default class MatchesScreen extends React.Component {
 	 * Navigator options
 	 */
 	static navigationOptions = {
+		headerStyle: {
+			backgroundColor: '#33475c',
+		},
+		headerTintColor: '#fff',
 		title: 'Upcoming matches',
 	};
 
