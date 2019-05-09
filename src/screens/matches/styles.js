@@ -4,42 +4,57 @@ const styles = StyleSheet.create({
 	// section styles
 	sectionContainer: {
 		alignItems: 'center',
-		flexDirection: 'row'
+		backgroundColor: '#ffecb3',
+		flexDirection: 'row',
+		padding: 3
 	},
 	sectionCountryFlag: {
 		flex: 1,
-		width: 50,
-		height: 38
+		width: 30,
+		height: 23
+	},
+	sectionCountryText: {
+		flex: 1,
+		fontWeight: 'bold'
 	},
 	sectionLeagueLogo: {
 		flex: 1,
-		width: 50,
-		height: 50
+		width: 30,
+		height: 30
 	},
-	sectionText: {
-		flex: 2
+	sectionLeagueText: {
+		flex: 4,
+		fontWeight: 'bold'
 	},
 	// match styles
 	matchContainer: {
 		alignItems: 'center',
-		flexDirection: 'row'
+		borderBottomColor: '#e1e1e1', 
+		borderBottomWidth: 1,
+		flexDirection: 'row',
+		padding: 3
 	},
 	matchDateText: {
 		textAlign: 'right'
 	},
 	matchDateContainer: {
-		flex: 2
+		flex: 2,
+		marginRight: 10
 	},
 	matchTeamContainer: {
 		alignItems: 'center',
-		flexDirection: 'row'
+		flexDirection: 'row',
+		paddingBottom: 3
+	},
+	matchTeamText: {
+		marginLeft: 10
 	},
 	matchTeamsContainer: {
 		flex: 1
 	},
 	matchTeamLogo: {
-		width: 50, 
-		height: 50
+		width: 30, 
+		height: 30
 	}
 });
 

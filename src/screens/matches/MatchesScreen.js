@@ -51,9 +51,9 @@ export default class MatchesScreen extends React.Component {
 		return (
 			<View style={styles.sectionContainer}>
 				<Image style={styles.sectionCountryFlag} source={imgCountryFlagSrc} resizeMode='contain'/>
-				<Text style={styles.sectionText}>{league.league_country}</Text>
+				<Text style={styles.sectionCountryText}>{league.league_country}</Text>
 				<Image style={styles.sectionLeagueLogo} source={imgLeagueLogoSrc} resizeMode='contain'/>
-				<Text style={styles.sectionText}>{league.league_name}</Text>
+				<Text style={styles.sectionLeagueText}>{league.league_name}</Text>
 			</View>
 		);
 	};
@@ -72,11 +72,11 @@ export default class MatchesScreen extends React.Component {
 				<View style={styles.matchTeamsContainer}>
 					<View style={styles.matchTeamContainer}>
 						<Image style={styles.matchTeamLogo} source={imgHomeTeamSrc} resizeMode='contain'/>
-						<Text>{match.homeTeam}</Text>
+						<Text style={styles.matchTeamText}>{match.homeTeam}</Text>
 					</View>
 					<View style={styles.matchTeamContainer}>
 						<Image style={styles.matchTeamLogo} source={imgAwayTeamSrc} resizeMode='contain'/>
-						<Text>{match.awayTeam}</Text>
+						<Text style={styles.matchTeamText}>{match.awayTeam}</Text>
 					</View>
 				</View>
 				<View style={styles.matchDateContainer}>
@@ -98,6 +98,13 @@ export default class MatchesScreen extends React.Component {
 				league_country_code: 'IT',
 				league_name: 'Serie A',
 				data: [
+					{
+						homeTeam: 'Napoli',
+						awayTeam: 'Cagliari',
+						homeTeam_id: 492,
+						awayTeam_id: 490,
+						event_timestamp: 1557339677
+					},
 					{
 						homeTeam: 'Napoli',
 						awayTeam: 'Cagliari',
