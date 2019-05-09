@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 		height: 23
 	},
 	sectionCountryText: {
-		flex: 1,
+		flex: 2,
 		fontWeight: 'bold'
 	},
 	sectionLeagueLogo: {
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 		height: 30
 	},
 	sectionLeagueText: {
-		flex: 4,
+		flex: 2,
 		fontWeight: 'bold'
 	},
 	// match styles
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 		textAlign: 'right'
 	},
 	matchDateContainer: {
-		flex: 2,
+		flex: 1,
 		marginRight: 10
 	},
 	matchTeamContainer: {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 		marginLeft: 10
 	},
 	matchTeamsContainer: {
-		flex: 1
+		flex: 2
 	},
 	matchTeamLogo: {
 		width: 30, 

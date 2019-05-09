@@ -28,7 +28,7 @@ export default class MatchesScreen extends React.Component {
 	 */
 	constructor(props) {
 		super(props);
-		this.state = { matches: [] };
+		this.state = { sections: [] };
 	}
 
 	/**
@@ -36,12 +36,53 @@ export default class MatchesScreen extends React.Component {
 	 */
 	async componentDidMount() {
 		try {
-			const matches = await FansInTearsApi.getFixtures(1557014400); // TODO: remove timestamp
-			this.setState({matches});
+			const matches = await FansInTearsApi.getFixtures();
+			const sections = this.convertMatchesForSectionsList(matches);
+			this.setState({sections});
 		} catch (err) {
 			console.error(err);
 		}
 	}
+
+	/**
+	 * Returns converted matches ready to be used by section list
+	 * @param {Array<Object>} matches Array of matches from server
+	 * @returns {Array<Object>} Array leagues with matches
+	 */
+	convertMatchesForSectionsList = (matches) => {
+		let sections = [];
+		for(let i = 0; i < matches.length; i++) {
+			const leagueData = {
+				league_id: matches[i].league.id,
+				league_country: matches[i].league.country,
+				league_country_code: matches[i].league.country_code,
+				league_name: matches[i].league.name,
+				data: []
+			};
+			const matchData = {
+				id: matches[i].id,
+				homeTeam: matches[i].homeTeam,
+				awayTeam: matches[i].awayTeam,
+				homeTeam_id: matches[i].homeTeam_id,
+				awayTeam_id: matches[i].awayTeam_id,
+				event_timestamp: matches[i].event_timestamp
+			};
+			// if league does not exist in sections then add match there and add league to sections
+			if(sections.filter((section) => section.league_id === leagueData.league_id).length === 0) {
+				leagueData.data.push(matchData);
+				sections.push(leagueData);
+			} else {
+				// league already exists, find it and add match there
+				for(let j = 0; j < sections.length; j++) {
+					if(sections[j].league_id === leagueData.league_id) {
+						sections[j].data.push(matchData);
+						break;
+					}
+				}
+			}
+		}
+		return sections;
+	};
 
 	/**
 	 * Renders a league section
@@ -95,37 +136,13 @@ export default class MatchesScreen extends React.Component {
 	 * @returns {Object} Template
 	 */
 	render() {
-		const sections = [
-			{
-				league_id: 94,
-				league_country: 'Italy',
-				league_country_code: 'IT',
-				league_name: 'Serie A',
-				data: [
-					{
-						homeTeam: 'Napoli',
-						awayTeam: 'Cagliari',
-						homeTeam_id: 492,
-						awayTeam_id: 490,
-						event_timestamp: 1557339677
-					},
-					{
-						homeTeam: 'Napoli',
-						awayTeam: 'Cagliari',
-						homeTeam_id: 492,
-						awayTeam_id: 490,
-						event_timestamp: 1557339677
-					}
-				]
-			}
-		];
-
 		return (
 			<View>
 				<SectionList
+					keyExtractor={(item) => item.id}
 					renderItem={this.renderMatch}
 					renderSectionHeader={this.renderLeague}
-					sections={sections}
+					sections={this.state.sections}
 				/>
 			</View>
 		);
