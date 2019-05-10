@@ -16,6 +16,7 @@ export default class FansInTearsApi {
 		if(from) url += `?from=${from}`;
 		if(to) url += `&fto=${to}`;
 		const resp = await fetch(url);
+		if(resp.status !== 200) throw new Error();
 		const respJson = await resp.json();
 		return respJson;
 	}

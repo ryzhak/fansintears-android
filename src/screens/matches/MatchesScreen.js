@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import { ActivityIndicator, Image, SectionList, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, SectionList, Text, View } from 'react-native';
 
 import config from 'config/config'
 import FansInTearsApi from 'library/networking/FansInTearsApi';
@@ -46,6 +46,7 @@ export default class MatchesScreen extends React.Component {
 			this.setState({sections});
 		} catch (err) {
 			console.error(err);
+			Alert.alert('Network error', 'Error on getting matches');
 		} finally {
 			this.setState({loading: false});
 		}
