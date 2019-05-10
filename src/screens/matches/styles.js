@@ -56,6 +56,10 @@ const styles = StyleSheet.create({
 	matchTeamLogo: {
 		width: 30, 
 		height: 30
+	},
+	// activity indicatior
+	loader: {
+		marginTop: 10
 	}
 });
 

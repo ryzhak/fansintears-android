@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import { Image, SectionList, Text, View } from 'react-native';
+import { ActivityIndicator, Image, SectionList, Text, View } from 'react-native';
 
 import config from 'config/config'
 import FansInTearsApi from 'library/networking/FansInTearsApi';
@@ -29,7 +29,10 @@ export default class MatchesScreen extends React.Component {
 	 */
 	constructor(props) {
 		super(props);
-		this.state = { sections: [] };
+		this.state = {
+			loading: false, 
+			sections: [] 
+		};
 	}
 
 	/**
@@ -37,11 +40,14 @@ export default class MatchesScreen extends React.Component {
 	 */
 	async componentDidMount() {
 		try {
+			this.setState({loading: true});
 			const matches = await FansInTearsApi.getFixtures();
 			const sections = this.convertMatchesForSectionsList(matches);
 			this.setState({sections});
 		} catch (err) {
 			console.error(err);
+		} finally {
+			this.setState({loading: false});
 		}
 	}
 
@@ -139,6 +145,7 @@ export default class MatchesScreen extends React.Component {
 	render() {
 		return (
 			<View>
+				{this.state.loading && <ActivityIndicator style={styles.loader} animating={this.state.loading} size="large" color="#33475c" />}
 				<SectionList
 					keyExtractor={(item) => item.id}
 					renderItem={this.renderMatch}
