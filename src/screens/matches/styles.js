@@ -60,6 +60,12 @@ const styles = StyleSheet.create({
 	// activity indicatior
 	loader: {
 		marginTop: 10
+	},
+	// empty matches text
+	emptyMatchesText: {
+		fontSize: 16,
+		marginTop: 10,
+		textAlign: 'center'  
 	}
 });
 

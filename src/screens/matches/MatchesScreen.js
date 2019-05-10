@@ -20,7 +20,7 @@ export default class MatchesScreen extends React.Component {
 			backgroundColor: '#33475c',
 		},
 		headerTintColor: '#fff',
-		title: 'Upcoming matches',
+		title: 'Chats',
 	};
 
 	/**
@@ -147,6 +147,7 @@ export default class MatchesScreen extends React.Component {
 		return (
 			<View>
 				{this.state.loading && <ActivityIndicator style={styles.loader} animating={this.state.loading} size="large" color="#33475c" />}
+				{!this.state.loading && this.state.sections.length === 0 && <Text style={styles.emptyMatchesText}>No matches available :(</Text>}
 				<SectionList
 					keyExtractor={(item) => item.id}
 					renderItem={this.renderMatch}
