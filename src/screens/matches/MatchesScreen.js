@@ -4,6 +4,7 @@ import { Image, SectionList, Text, View } from 'react-native';
 
 import config from 'config/config'
 import FansInTearsApi from 'library/networking/FansInTearsApi';
+import images from 'res/images';
 import styles from './styles';
 
 /**
@@ -91,8 +92,8 @@ export default class MatchesScreen extends React.Component {
 	 */
 	renderLeague = (obj) => {
 		const league = obj.section;
-		const imgCountryFlagSrc = require('../../res/images/country_flags/it.png');
-		const imgLeagueLogoSrc = require('../../res/images/league_logos/94.png');
+		const imgCountryFlagSrc = images.country_flags[league.league_country_code.toLowerCase()];
+		const imgLeagueLogoSrc = images.league_logos[league.league_id];
 		return (
 			<View style={styles.sectionContainer}>
 				<Image style={styles.sectionCountryFlag} source={imgCountryFlagSrc} resizeMode='contain'/>
@@ -110,8 +111,8 @@ export default class MatchesScreen extends React.Component {
 	 */
 	renderMatch = (obj) => {
 		const match = obj.item;
-		const imgHomeTeamSrc = require('../../res/images/club_logos/492.png');
-		const imgAwayTeamSrc = require('../../res/images/club_logos/490.png');
+		const imgHomeTeamSrc = images.club_logos[match.homeTeam_id];
+		const imgAwayTeamSrc = images.club_logos[match.awayTeam_id];
 		return (
 			<View style={styles.matchContainer}>
 				<View style={styles.matchTeamsContainer}>

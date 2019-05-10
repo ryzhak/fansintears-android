@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
 	},
 	sectionLeagueLogo: {
 		flex: 1,
+		marginRight: 5,
 		width: 30,
 		height: 30
 	},
