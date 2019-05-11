@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import { ActivityIndicator, Alert, Image, SectionList, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, Linking, SectionList, Text, TouchableOpacity, View } from 'react-native';
 
 import config from 'config/config'
 import FansInTearsApi from 'library/networking/FansInTearsApi';
@@ -73,7 +73,8 @@ export default class MatchesScreen extends React.Component {
 				awayTeam: matches[i].awayTeam,
 				homeTeam_id: matches[i].homeTeam_id,
 				awayTeam_id: matches[i].awayTeam_id,
-				event_timestamp: matches[i].event_timestamp
+				event_timestamp: matches[i].event_timestamp,
+				telegram_invite_link: matches[i].telegram_invite_link
 			};
 			// if league does not exist in sections then add match there and add league to sections
 			if(sections.filter((section) => section.league_id === leagueData.league_id).length === 0) {
@@ -91,6 +92,20 @@ export default class MatchesScreen extends React.Component {
 		}
 		return sections;
 	};
+
+	/**
+	 * Redirects to telegram group on match click
+	 * @param {Object} match Match data
+	 */
+	onMatchPress = (match) => {
+		// if telegram group does not exist then show error
+		if(match.telegram_invite_link === '') {
+			Alert.alert('Oops, chat does not exist', 'Chat will be available soon');
+		} else {
+			// open chat
+			Linking.openURL(match.telegram_invite_link);
+		}
+	}
 
 	/**
 	 * Renders a league section
@@ -121,21 +136,23 @@ export default class MatchesScreen extends React.Component {
 		const imgHomeTeamSrc = images.club_logos[match.homeTeam_id];
 		const imgAwayTeamSrc = images.club_logos[match.awayTeam_id];
 		return (
-			<View style={styles.matchContainer}>
-				<View style={styles.matchTeamsContainer}>
-					<View style={styles.matchTeamContainer}>
-						<Image style={styles.matchTeamLogo} source={imgHomeTeamSrc} resizeMode='contain'/>
-						<Text style={styles.matchTeamText}>{match.homeTeam}</Text>
+			<TouchableOpacity onPress={() => this.onMatchPress(match)}>
+				<View style={styles.matchContainer}>
+					<View style={styles.matchTeamsContainer}>
+						<View style={styles.matchTeamContainer}>
+							<Image style={styles.matchTeamLogo} source={imgHomeTeamSrc} resizeMode='contain'/>
+							<Text style={styles.matchTeamText}>{match.homeTeam}</Text>
+						</View>
+						<View style={styles.matchTeamContainer}>
+							<Image style={styles.matchTeamLogo} source={imgAwayTeamSrc} resizeMode='contain'/>
+							<Text style={styles.matchTeamText}>{match.awayTeam}</Text>
+						</View>
 					</View>
-					<View style={styles.matchTeamContainer}>
-						<Image style={styles.matchTeamLogo} source={imgAwayTeamSrc} resizeMode='contain'/>
-						<Text style={styles.matchTeamText}>{match.awayTeam}</Text>
+					<View style={styles.matchDateContainer}>
+						<Text style={styles.matchDateText}>{moment.unix(match.event_timestamp).format('DD.MM HH:mm')}</Text>
 					</View>
 				</View>
-				<View style={styles.matchDateContainer}>
-					<Text style={styles.matchDateText}>{moment.unix(match.event_timestamp).format('DD.MM HH:mm')}</Text>
-				</View>
-			</View>
+			</TouchableOpacity>
 		);
 	};
 
