@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 import { ActivityIndicator, Alert, Image, Linking, SectionList, Text, TouchableOpacity, View } from 'react-native';
+import SplashScreen from 'react-native-splash-screen'
 
 import config from 'config/config'
 import FansInTearsApi from 'library/networking/FansInTearsApi';
@@ -40,6 +41,7 @@ export default class MatchesScreen extends React.Component {
 	 */
 	async componentDidMount() {
 		try {
+			SplashScreen.hide();
 			this.setState({loading: true});
 			const matches = await FansInTearsApi.getFixtures();
 			const sections = this.convertMatchesForSectionsList(matches);
