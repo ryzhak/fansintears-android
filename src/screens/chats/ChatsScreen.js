@@ -1,6 +1,5 @@
 import React from 'react';
 import { ActivityIndicator, Alert, FlatList, Image, Linking, Text, TouchableNativeFeedback, View } from 'react-native';
-import SplashScreen from 'react-native-splash-screen'
 
 import FansInTearsApi from 'library/networking/FansInTearsApi';
 import images from 'res/images';
@@ -39,7 +38,6 @@ export default class ChatsScreen extends React.Component {
 	 */
 	async componentDidMount() {
 		try {
-			SplashScreen.hide();
 			this.setState({loading: true});
 			const leagues = await FansInTearsApi.getLeagues();
 			this.setState({leagues});

@@ -7,20 +7,19 @@
  */
 
 import React, { Component } from 'react';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createAppContainer, createBottomTabNavigator } from 'react-navigation';
 
 import ChatsScreen from 'screens/chats/ChatsScreen';
+import MemesScreen from 'screens/memes/MemesScreen';
+import PlayersScreen from 'screens/players/PlayersScreen';
 
-const RootStack = createStackNavigator(
-  {
-    Chats: ChatsScreen
-  },
-  {
-    initialRouteName: 'Chats',
-  }
-);
+const TabNavigator = createBottomTabNavigator({
+  Memes: MemesScreen,
+  Players: PlayersScreen,
+  Chats: ChatsScreen
+});
 
-const AppContainer = createAppContainer(RootStack);
+const AppContainer = createAppContainer(TabNavigator);
 
 type Props = {};
 export default class App extends Component<Props> {
