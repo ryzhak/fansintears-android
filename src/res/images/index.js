@@ -130,6 +130,9 @@ const images = {
 		87: require('./league_logos/87.png'),
 		94: require('./league_logos/94.png'),
 		135: require('./league_logos/135.png')
+	},
+	misc: {
+		'ball': require('./misc/ball.png')
 	}
 };
 

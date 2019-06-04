@@ -9,14 +9,14 @@
 import React, { Component } from 'react';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-import MatchesScreen from 'screens/matches/MatchesScreen';
+import ChatsScreen from 'screens/chats/ChatsScreen';
 
 const RootStack = createStackNavigator(
   {
-    Matches: MatchesScreen
+    Chats: ChatsScreen
   },
   {
-    initialRouteName: 'Matches',
+    initialRouteName: 'Chats',
   }
 );
 

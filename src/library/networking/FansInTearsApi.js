@@ -21,4 +21,16 @@ export default class FansInTearsApi {
 		return respJson;
 	}
 
+	/**
+	 * Returns leagues with chats
+	 * @returns {Array} Array of leagues with chats
+	 */
+	static async getLeagues() {
+		const url = `${config.API_URL}/leagues`;
+		const resp = await fetch(url);
+		if(resp.status !== 200) throw new Error();
+		const respJson = await resp.json();
+		return respJson;
+	}
+
 }
