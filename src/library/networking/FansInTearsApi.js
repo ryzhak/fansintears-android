@@ -33,4 +33,18 @@ export default class FansInTearsApi {
 		return respJson;
 	}
 
+	/**
+	 * Returns media posts by group
+	 * @param {string} group Group name 
+	 * @param {number} page Pagination number
+	 * @returns {Array} Array of media posts 
+	 */
+	static async getMediaPosts(group, page) {
+		const url = `${config.API_URL}/media/content?group=${group}&page=${page}`;
+		const resp = await fetch(url);
+		if(resp.status !== 200) throw new Error();
+		const respJson = await resp.json();
+		return respJson;
+	}
+
 }

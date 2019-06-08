@@ -2,7 +2,11 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen'
 
-// TODO: desc
+import SocialFeed from 'library/components/SocialFeed';
+
+/**
+ * Component renders memes into social feed
+ */
 export default class MemesScreen extends React.Component {
 
 	/**
@@ -19,7 +23,7 @@ export default class MemesScreen extends React.Component {
 	render() {
 		return (
 			<View>
-				<Text>Memes</Text>
+				<SocialFeed group="memes" />
 			</View>
 		);
 	}
