@@ -55,14 +55,15 @@ export default class SocialFeed extends React.Component {
 	 */
 	renderMediaPost = (obj) => {
 		const mediaPost = obj.item;
+		const containerPadding = 12;
 		return (
-			<View>
-				<View style={{flexDirection: 'row', padding: 10, alignItems: 'center'}}>
-					<Text style={{flex: 3, fontSize: 20, color: '#fff'}}>{ mediaPost.text }</Text>
-					<Text style={{flex: 1, textAlign: 'right', color: '#fff'}}>{ moment.unix(mediaPost.createdAt).format('DD.MM HH:mm') }</Text>
+			<View style={{padding: containerPadding, backgroundColor: '#33475c'}}>
+				<View style={{flexDirection: 'row', padding: 10, alignItems: 'center', backgroundColor: '#fff'}}>
+					<Text style={{flex: 3, fontSize: 20}}>{ mediaPost.text }</Text>
+					<Text style={{flex: 1, textAlign: 'right'}}>{ moment.unix(mediaPost.createdAt).format('DD.MM HH:mm') }</Text>
 				</View>
 				{ mediaPost.type === 'photo' &&
-					<AutoHeightImage width={this.state.deviceWidth} source={{uri: mediaPost.url}} />
+					<AutoHeightImage width={this.state.deviceWidth - containerPadding * 2} source={{uri: mediaPost.url}} />
 				}
 			</View>
 		);
@@ -76,7 +77,7 @@ export default class SocialFeed extends React.Component {
 		// TODO: no data
 		// TODO: loader
 		return (
-			<View style={{backgroundColor: '#33475c'}}>
+			<View>
 				<FlatList 
 					data={this.state.mediaPosts}
 					keyExtractor={(item) => item._id}
