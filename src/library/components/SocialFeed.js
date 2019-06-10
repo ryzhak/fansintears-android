@@ -1,6 +1,8 @@
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, Dimensions, FlatList, Text, View } from 'react-native';
+import AutoHeightImage from 'react-native-auto-height-image';
 
 import FansInTearsApi from 'library/networking/FansInTearsApi';
 
@@ -16,6 +18,7 @@ export default class SocialFeed extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			deviceWidth: Dimensions.get('window').width,
 			loading: false, 
 			mediaPosts: [] 
 		};
@@ -37,7 +40,6 @@ export default class SocialFeed extends React.Component {
 			this.setState({loading: true});
 			const mediaPosts = await FansInTearsApi.getMediaPosts(this.props.group, page);
 			this.setState({mediaPosts: [...this.state.mediaPosts, ...mediaPosts]});
-			console.log(this.state.mediaPosts);
 		} catch (err) {
 			console.error(err);
 			Alert.alert('Network error', 'Error on getting media posts');
@@ -47,13 +49,39 @@ export default class SocialFeed extends React.Component {
 	};
 
 	/**
+	 * Renders media post in a list
+	 * @param {Object} obj Media post data
+	 * @returns {Object} JSX with media post single row template
+	 */
+	renderMediaPost = (obj) => {
+		const mediaPost = obj.item;
+		return (
+			<View>
+				<View style={{flexDirection: 'row', padding: 10, alignItems: 'center'}}>
+					<Text style={{flex: 3, fontSize: 20, color: '#fff'}}>{ mediaPost.text }</Text>
+					<Text style={{flex: 1, textAlign: 'right', color: '#fff'}}>{ moment.unix(mediaPost.createdAt).format('DD.MM HH:mm') }</Text>
+				</View>
+				{ mediaPost.type === 'photo' &&
+					<AutoHeightImage width={this.state.deviceWidth} source={{uri: mediaPost.url}} />
+				}
+			</View>
+		);
+	}
+
+	/**
 	 * Renders template
 	 * @returns {Object} JSX template
 	 */
 	render() {
+		// TODO: no data
+		// TODO: loader
 		return (
-			<View>
-				<Text>Social feed</Text>
+			<View style={{backgroundColor: '#33475c'}}>
+				<FlatList 
+					data={this.state.mediaPosts}
+					keyExtractor={(item) => item._id}
+					renderItem={this.renderMediaPost}
+				/>
 			</View>
 		);
 	}
