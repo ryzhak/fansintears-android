@@ -91,7 +91,7 @@ export default class ChatsScreen extends React.Component {
 	render() {
 		return (
 			<View>
-				{this.state.loading && <ActivityIndicator style={styles.loader} animating={this.state.loading} size="large" color="#33475c" />}
+				{this.state.loading && <ActivityIndicator style={styles.loader} animating={this.state.loading} size="large" color="#e54f38" />}
 				{!this.state.loading && this.state.leagues.length === 0 && <Text style={styles.emptyLeaguesText}>No chats available :(</Text>}
 				<FlatList  
 					data={this.state.leagues}

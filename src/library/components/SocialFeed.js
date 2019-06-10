@@ -1,10 +1,12 @@
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Alert, Dimensions, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Dimensions, FlatList, Text, View } from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
+import Video from 'react-native-video';
 
 import FansInTearsApi from 'library/networking/FansInTearsApi';
+import styles from './styles';
 
 /**
  * Component renders media posts by group
@@ -55,15 +57,17 @@ export default class SocialFeed extends React.Component {
 	 */
 	renderMediaPost = (obj) => {
 		const mediaPost = obj.item;
-		const containerPadding = 12;
 		return (
-			<View style={{padding: containerPadding, backgroundColor: '#33475c'}}>
-				<View style={{flexDirection: 'row', padding: 10, alignItems: 'center', backgroundColor: '#fff'}}>
-					<Text style={{flex: 3, fontSize: 20}}>{ mediaPost.text }</Text>
-					<Text style={{flex: 1, textAlign: 'right'}}>{ moment.unix(mediaPost.createdAt).format('DD.MM HH:mm') }</Text>
+			<View style={styles.mediaPostContainer}>
+				<View style={styles.mediaPostTextContentContainer}>
+					<Text style={styles.mediaPostText}>{ mediaPost.text }</Text>
+					<Text style={styles.mediaPostDate}>{ moment.unix(mediaPost.createdAt).format('DD.MM HH:mm') }</Text>
 				</View>
 				{ mediaPost.type === 'photo' &&
-					<AutoHeightImage width={this.state.deviceWidth - containerPadding * 2} source={{uri: mediaPost.url}} />
+					<AutoHeightImage width={this.state.deviceWidth - styles.mediaPostContainer.padding * 2} source={{uri: mediaPost.url}} />
+				}
+				{ mediaPost.type === 'video' &&
+					<Video style={styles.mediaPostVideo} source={{uri: mediaPost.url}} resizeMode='stretch' controls={true} paused={true} />
 				}
 			</View>
 		);
@@ -74,8 +78,6 @@ export default class SocialFeed extends React.Component {
 	 * @returns {Object} JSX template
 	 */
 	render() {
-		// TODO: no data
-		// TODO: loader
 		return (
 			<View>
 				<FlatList 
@@ -83,6 +85,8 @@ export default class SocialFeed extends React.Component {
 					keyExtractor={(item) => item._id}
 					renderItem={this.renderMediaPost}
 				/>
+				{!this.state.loading && this.state.mediaPosts.length === 0 && <Text style={styles.emptyFeedText}>No feed available :(</Text>}
+				{this.state.loading && <ActivityIndicator style={styles.loader} animating={this.state.loading} size="large" color="#e54f38" />}
 			</View>
 		);
 	}
