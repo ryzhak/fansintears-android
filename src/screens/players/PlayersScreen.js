@@ -1,7 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
-// TODO: desc
+import SocialFeed from 'library/components/SocialFeed';
+
+/**
+ * Component renders players instagram into social feed
+ */
 export default class PlayersScreen extends React.Component {
 	/**
 	 * Renders template
@@ -10,7 +14,7 @@ export default class PlayersScreen extends React.Component {
 	render() {
 		return (
 			<View>
-				<Text>Players</Text>
+				<SocialFeed group="players" showAuthor={true} />
 			</View>
 		);
 	}

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ActivityIndicator, Alert, Button, Dimensions, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Button, Dimensions, FlatList, Image, Text, View } from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
 import Video from 'react-native-video';
 
@@ -12,6 +12,14 @@ import styles from './styles';
  * Component renders media posts by group
  */
 export default class SocialFeed extends React.Component {
+
+	/**
+	 * Default component properties
+	 */
+	static defaultProps = {
+		group: 'memes',
+		showAuthor: true
+	};
 
 	/**
 	 * Component constructor
@@ -76,6 +84,14 @@ export default class SocialFeed extends React.Component {
 		const hasMore = this.state.currentPage < this.state.lastPage;
 		return (
 			<View style={styles.mediaPostContainer}>
+				{ this.props.showAuthor && 
+					<View style={styles.authorContainer}>
+						{ mediaPost.profileAvatar && 
+							<Image style={styles.authorAvatar} source={{uri: mediaPost.profileAvatar}} />
+						}
+						<Text style={styles.authorName}>{ mediaPost.profileFullName }</Text>
+					</View>
+				}
 				<View style={styles.mediaPostTextContentContainer}>
 					<Text style={styles.mediaPostText}>{ mediaPost.text }</Text>
 					<Text style={styles.mediaPostDate}>{ moment.unix(mediaPost.createdAt).format('DD.MM HH:mm') }</Text>
@@ -117,5 +133,7 @@ export default class SocialFeed extends React.Component {
  */
 SocialFeed.propTypes = {
 	// social media group, available values: 'memes', 'players'
-	group: PropTypes.oneOf(['memes', 'players']).isRequired
+	group: PropTypes.oneOf(['memes', 'players']).isRequired,
+	// whether to show author avatar with full name
+	showAuthor: PropTypes.bool.isRequired
 };

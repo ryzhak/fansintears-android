@@ -23,7 +23,7 @@ export default class MemesScreen extends React.Component {
 	render() {
 		return (
 			<View>
-				<SocialFeed group="memes" />
+				<SocialFeed group="memes" showAuthor={false} />
 			</View>
 		);
 	}

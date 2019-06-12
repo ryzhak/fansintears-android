@@ -1,6 +1,24 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+	// author styles
+	authorContainer: {
+		alignItems: 'center',
+		backgroundColor: '#fff',
+		flexDirection: 'row',
+		padding: 10
+	},
+	authorAvatar: {
+		borderColor: '#e54f38',
+		borderRadius: 20,
+		borderWidth: 2,
+		height: 40,
+		width: 40 
+	},
+	authorName: {
+		fontWeight: 'bold',
+		marginLeft: 10
+	},
 	// media post styles
 	mediaPostContainer: {
 		backgroundColor: '#33475c',
