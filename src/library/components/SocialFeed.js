@@ -1,7 +1,7 @@
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { ActivityIndicator, Alert, Dimensions, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Button, Dimensions, FlatList, Text, View } from 'react-native';
 import AutoHeightImage from 'react-native-auto-height-image';
 import Video from 'react-native-video';
 
@@ -20,7 +20,9 @@ export default class SocialFeed extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			currentPage: 0,
 			deviceWidth: Dimensions.get('window').width,
+			lastPage: 0,
 			loading: false, 
 			mediaPosts: [] 
 		};
@@ -30,7 +32,7 @@ export default class SocialFeed extends React.Component {
 	 * On component mount
 	 */
 	componentDidMount() {
-		this.loadMediaPosts(0);
+		this.loadMediaPosts(this.state.currentPage);
 	}
 
 	/**
@@ -40,8 +42,11 @@ export default class SocialFeed extends React.Component {
 	loadMediaPosts = async (page) => {
 		try {
 			this.setState({loading: true});
-			const mediaPosts = await FansInTearsApi.getMediaPosts(this.props.group, page);
-			this.setState({mediaPosts: [...this.state.mediaPosts, ...mediaPosts]});
+			const resp = await FansInTearsApi.getMediaPosts(this.props.group, page);
+			this.setState({
+				lastPage: +resp.headers['x-page-last'],
+				mediaPosts: [...this.state.mediaPosts, ...resp.data]
+			});
 		} catch (err) {
 			console.error(err);
 			Alert.alert('Network error', 'Error on getting media posts');
@@ -51,12 +56,24 @@ export default class SocialFeed extends React.Component {
 	};
 
 	/**
+	 * Loads the next content page
+	 */
+	onLoadMorePress = () => {
+		// increase current page by 1 and load next page
+		this.setState(prevState => ({ currentPage: prevState.currentPage + 1 }), () => {
+			this.loadMediaPosts(this.state.currentPage);
+		});
+	};
+
+	/**
 	 * Renders media post in a list
 	 * @param {Object} obj Media post data
 	 * @returns {Object} JSX with media post single row template
 	 */
 	renderMediaPost = (obj) => {
 		const mediaPost = obj.item;
+		const isLast = obj.index === this.state.mediaPosts.length - 1;
+		const hasMore = this.state.currentPage < this.state.lastPage;
 		return (
 			<View style={styles.mediaPostContainer}>
 				<View style={styles.mediaPostTextContentContainer}>
@@ -69,6 +86,9 @@ export default class SocialFeed extends React.Component {
 				{ mediaPost.type === 'video' &&
 					<Video style={styles.mediaPostVideo} source={{uri: mediaPost.url}} resizeMode='stretch' controls={true} paused={true} />
 				}
+				{ isLast && hasMore && !this.state.loading &&
+					<Button onPress={this.onLoadMorePress} title="Load More" color="#e54f38" />
+				}
 			</View>
 		);
 	}
@@ -80,7 +100,7 @@ export default class SocialFeed extends React.Component {
 	render() {
 		return (
 			<View>
-				<FlatList 
+				<FlatList
 					data={this.state.mediaPosts}
 					keyExtractor={(item) => item._id}
 					renderItem={this.renderMediaPost}
