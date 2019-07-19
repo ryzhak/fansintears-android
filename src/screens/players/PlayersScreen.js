@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import SocialFeed from 'library/components/SocialFeed';
+import SocialFeed from 'library/components/SocialFeed/SocialFeed';
 
 /**
  * Component renders players instagram into social feed
