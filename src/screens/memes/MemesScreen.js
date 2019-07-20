@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 
+import IconButton from 'library/components/IconButton/IconButton';
 import SocialFeed from 'library/components/SocialFeed/SocialFeed';
 
 /**
@@ -21,9 +21,7 @@ export default class MemesScreen extends React.Component {
 				fontFamily: 'OpenSans-Regular',
 				fontWeight: 'normal'
 			},
-			headerLeft: <TouchableOpacity style={{backgroundColor: '#FB8B23', width: 30, height: 30, justifyContent: 'center', alignItems: 'center', borderRadius: 15, marginLeft: 10}} onPress={navigation.openDrawer}>
-							<Icon name="bars" size={16} color="#fff" />
-						</TouchableOpacity>
+			headerLeft: <IconButton name='bars' onPress={navigation.openDrawer} />
 		};
 	};
 
