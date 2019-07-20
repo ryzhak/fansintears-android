@@ -1,14 +1,28 @@
 import React from 'react';
 import { ActivityIndicator, Alert, FlatList, Image, Linking, Text, TouchableNativeFeedback, View } from 'react-native';
 
+import IconButton from 'library/components/IconButton/IconButton';
 import FansInTearsApi from 'library/networking/FansInTearsApi';
 import images from 'res/images';
+import palette from 'res/palette';
+import strings from 'res/strings';
 import styles from './styles';
 
 /**
  * Component renders a list of league chats
  */
 export default class ChatsScreen extends React.Component {
+
+	/**
+	 * Navigator options
+	 */
+	static navigationOptions = ({ navigation }) => {
+		return {
+			headerLeft: <IconButton name='bars' onPress={navigation.openDrawer} />,
+			headerTitleStyle: palette.headerTitle,
+			title: strings.players.title
+		};
+	};
 
 	/**
 	 * Component constructor

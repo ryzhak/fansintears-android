@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-
 import Icon from 'react-native-vector-icons/FontAwesome5';
+
+import colors from 'res/colors';
 
 /**
  * Component renders button with a single icon inside
@@ -15,7 +16,7 @@ export default class IconButton extends React.Component {
 	static defaultProps = {
 		componentStyle: {
 			alignItems: 'center',
-			backgroundColor: '#FB8B23',
+			backgroundColor: colors.primary,
 			borderRadius: 15,
 			height: 30,
 			marginLeft: 10,

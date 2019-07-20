@@ -4,6 +4,8 @@ import SplashScreen from 'react-native-splash-screen';
 
 import IconButton from 'library/components/IconButton/IconButton';
 import SocialFeed from 'library/components/SocialFeed/SocialFeed';
+import palette from 'res/palette';
+import strings from 'res/strings';
 
 /**
  * Component renders memes into social feed
@@ -15,13 +17,9 @@ export default class MemesScreen extends React.Component {
 	 */
 	static navigationOptions = ({ navigation }) => {
 		return {
-			title: 'Memes',
-			headerTitleStyle: {
-				fontSize: 20,
-				fontFamily: 'OpenSans-Regular',
-				fontWeight: 'normal'
-			},
-			headerLeft: <IconButton name='bars' onPress={navigation.openDrawer} />
+			headerLeft: <IconButton name='bars' onPress={navigation.openDrawer} />,
+			headerTitleStyle: palette.headerTitle,
+			title: strings.memes.title
 		};
 	};
 
