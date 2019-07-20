@@ -20,7 +20,7 @@ export default class ChatsScreen extends React.Component {
 		return {
 			headerLeft: <IconButton name='bars' onPress={navigation.openDrawer} />,
 			headerTitleStyle: palette.headerTitle,
-			title: strings.players.title
+			title: strings.chats.title
 		};
 	};
 
