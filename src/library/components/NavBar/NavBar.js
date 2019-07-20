@@ -25,7 +25,7 @@ class NavBar extends React.Component {
 				<TouchableOpacity style={{backgroundColor: '#FB8B23', width: 30, height: 30, justifyContent: 'center', alignItems: 'center', borderRadius: 15}} onPress={this.onMenuPress}>
 					<Icon name="bars" size={16} color="#fff" />
 				</TouchableOpacity>
-				<Text style={{marginLeft: 10}}>Title</Text>
+				<Text style={{marginLeft: 10, fontSize: 24, fontFamily: 'OpenSans-Regular', color: '#000'}}>Title</Text>
 			</View>
 		);
 	}
