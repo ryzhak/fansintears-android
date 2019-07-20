@@ -11,17 +11,6 @@ import styles from './styles';
 export default class ChatsScreen extends React.Component {
 
 	/**
-	 * Navigator options
-	 */
-	static navigationOptions = {
-		headerStyle: {
-			backgroundColor: '#33475c',
-		},
-		headerTintColor: '#fff',
-		title: 'Chats',
-	};
-
-	/**
 	 * Component constructor
 	 * @param {Object} props Component properties 
 	 */
