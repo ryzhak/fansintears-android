@@ -1,6 +1,7 @@
 const fonts = {
+	bold: 'OpenSans-Bold',
 	regular: 'OpenSans-Regular',
-	bold: 'OpenSans-SemiBold'
+	semibold: 'OpenSans-SemiBold'
 };
 
 export default fonts;
