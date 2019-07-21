@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import IconButton from 'library/components/IconButton/IconButton';
+import PatternBackground from 'library/components/PatternBackground/PatternBackground';
 import SocialFeed from 'library/components/SocialFeed/SocialFeed';
 import palette from 'res/palette';
 import strings from 'res/strings';
@@ -28,9 +29,11 @@ export default class PlayersScreen extends React.Component {
 	 */
 	render() {
 		return (
-			<View>
-				<SocialFeed group="players" showAuthor={true} />
-			</View>
+			<PatternBackground>
+				<View>
+					<SocialFeed group="players" showAuthor={true} />
+				</View>
+			</PatternBackground>
 		);
 	}
 }

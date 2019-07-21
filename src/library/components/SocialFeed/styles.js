@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
 	},
 	// media post styles
 	mediaPostContainer: {
-		backgroundColor: '#33475c',
 		padding: 12
 	},
 	mediaPostTextContentContainer: {

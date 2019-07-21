@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
 import IconButton from 'library/components/IconButton/IconButton';
+import PatternBackground from 'library/components/PatternBackground/PatternBackground';
 import SocialFeed from 'library/components/SocialFeed/SocialFeed';
 import palette from 'res/palette';
 import strings from 'res/strings';
@@ -36,9 +37,11 @@ export default class MemesScreen extends React.Component {
 	 */
 	render() {
 		return (
-			<View>
-				<SocialFeed group="memes" showAuthor={false} />
-			</View>
+			<PatternBackground>
+				<View>
+					<SocialFeed group="memes" showAuthor={false} />
+				</View>
+			</PatternBackground>
 		);
 	}
 }

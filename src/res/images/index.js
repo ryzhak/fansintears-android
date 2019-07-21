@@ -132,6 +132,7 @@ const images = {
 		135: require('./league_logos/135.png')
 	},
 	misc: {
+		'background_pattern': require('./misc/background_pattern.png'),
 		'ball': require('./misc/ball.png'),
 		'logo_drawer': require('./misc/logo_drawer.png')
 	}

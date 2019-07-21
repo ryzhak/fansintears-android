@@ -2,6 +2,7 @@ import React from 'react';
 import { ActivityIndicator, Alert, FlatList, Image, Linking, Text, TouchableNativeFeedback, View } from 'react-native';
 
 import IconButton from 'library/components/IconButton/IconButton';
+import PatternBackground from 'library/components/PatternBackground/PatternBackground';
 import FansInTearsApi from 'library/networking/FansInTearsApi';
 import images from 'res/images';
 import palette from 'res/palette';
@@ -93,15 +94,17 @@ export default class ChatsScreen extends React.Component {
 	 */
 	render() {
 		return (
-			<View>
-				{this.state.loading && <ActivityIndicator style={styles.loader} animating={this.state.loading} size="large" color="#e54f38" />}
-				{!this.state.loading && this.state.leagues.length === 0 && <Text style={styles.emptyLeaguesText}>No chats available :(</Text>}
-				<FlatList  
-					data={this.state.leagues}
-					keyExtractor={(item) => item._id}
-					renderItem={this.renderLeagueChat}
-				/>
-			</View>
+			<PatternBackground>
+				<View>
+					{this.state.loading && <ActivityIndicator style={styles.loader} animating={this.state.loading} size="large" color="#e54f38" />}
+					{!this.state.loading && this.state.leagues.length === 0 && <Text style={styles.emptyLeaguesText}>No chats available :(</Text>}
+					<FlatList  
+						data={this.state.leagues}
+						keyExtractor={(item) => item._id}
+						renderItem={this.renderLeagueChat}
+					/>
+				</View>
+			</PatternBackground>
 		);
 	}
 
