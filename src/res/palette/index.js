@@ -1,6 +1,11 @@
 import fonts from '../fonts';
 
 const palette = {
+	commonButton: {
+		borderRadius: 20,
+		iconSize: 16,
+		padding: 10
+	},
 	drawerIconSize: 18,
 	drawerItem: {
 		borderRadius: 8

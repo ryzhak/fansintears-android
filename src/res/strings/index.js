@@ -6,7 +6,15 @@ const strings = {
 		title: 'Top 25 players'
 	},
 	chats: {
+		buttons: {
+			chat: 'Chat'
+		},
 		title: 'Chats'
+	},
+	components: {
+		commonButton: {
+			defaultTitle: 'Title'
+		}
 	}
 };
 
