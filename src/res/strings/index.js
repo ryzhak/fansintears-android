@@ -9,6 +9,7 @@ const strings = {
 		buttons: {
 			chat: 'Chat'
 		},
+		empty: 'No chats available :(',
 		title: 'Chats'
 	},
 	components: {

@@ -1,9 +1,11 @@
 import React from 'react';
-import { ActivityIndicator, Alert, FlatList, Image, Linking, Text, TouchableNativeFeedback, View } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, Image, Linking, Text, View } from 'react-native';
 
+import CommonButton from 'library/components/CommonButton/CommonButton';
 import IconButton from 'library/components/IconButton/IconButton';
 import PatternBackground from 'library/components/PatternBackground/PatternBackground';
 import FansInTearsApi from 'library/networking/FansInTearsApi';
+import colors from 'res/colors';
 import images from 'res/images';
 import palette from 'res/palette';
 import strings from 'res/strings';
@@ -75,16 +77,23 @@ export default class ChatsScreen extends React.Component {
 	renderLeagueChat = (obj) => {
 		const league = obj.item;
 		return (
-			<TouchableNativeFeedback onPress={() => this.onLeagueChatPress(league)}>
+			<React.Fragment>
 				<View style={styles.leagueChatContainer}>
 					{league.logo === '' ? (
 						<Image style={styles.leagueChatLogo} source={images.misc.ball} resizeMode='contain' />
 					) : (
 						<Image style={styles.leagueChatLogo} source={{uri: league.logo}} resizeMode='contain' />
 					)}
-					<Text style={styles.leagueChatTitle}>{league.country}. {league.name}</Text>
+					<View style={styles.containerText}>
+						<Text style={styles.leagueCountryText}>{league.country}</Text>
+						<Text style={styles.leagueNameText}>{league.name}</Text>
+					</View>
+					<View style={styles.containerChatButton}>
+						<CommonButton iconName="comments" title={strings.chats.buttons.chat} onPress={() => this.onLeagueChatPress(league)} />
+					</View>
 				</View>
-			</TouchableNativeFeedback>
+				<View style={styles.separator} />
+			</React.Fragment>
 		);
 	}
 
@@ -95,9 +104,9 @@ export default class ChatsScreen extends React.Component {
 	render() {
 		return (
 			<PatternBackground>
-				<View>
-					{this.state.loading && <ActivityIndicator style={styles.loader} animating={this.state.loading} size="large" color="#e54f38" />}
-					{!this.state.loading && this.state.leagues.length === 0 && <Text style={styles.emptyLeaguesText}>No chats available :(</Text>}
+				<View style={styles.container}>
+					{this.state.loading && <ActivityIndicator style={styles.loader} animating={this.state.loading} size="large" color={colors.primary} />}
+					{!this.state.loading && this.state.leagues.length === 0 && <Text style={styles.emptyLeaguesText}>{strings.chats.empty}</Text>}
 					<FlatList  
 						data={this.state.leagues}
 						keyExtractor={(item) => item._id}
