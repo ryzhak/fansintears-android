@@ -15,6 +15,10 @@ const strings = {
 	components: {
 		commonButton: {
 			defaultTitle: 'Title'
+		},
+		socialFeed: {
+			empty: 'No feed available :(',
+			loadMore: 'Load More'
 		}
 	}
 };

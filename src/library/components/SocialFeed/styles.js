@@ -1,37 +1,49 @@
 import { StyleSheet } from 'react-native';
 
+import colors from 'res/colors';
+import fonts from 'res/fonts';
+
 const styles = StyleSheet.create({
 	// author styles
 	authorContainer: {
 		alignItems: 'center',
-		backgroundColor: '#fff',
+		backgroundColor: colors.background_light,
 		flexDirection: 'row',
 		padding: 10
 	},
 	authorAvatar: {
-		borderColor: '#e54f38',
 		borderRadius: 20,
-		borderWidth: 2,
 		height: 40,
 		width: 40 
 	},
-	authorName: {
-		fontWeight: 'bold',
+	headerTextContainer: {
 		marginLeft: 10
+	},
+	authorName: {
+		color: colors.foreground_dark,
+		fontFamily: fonts.semibold,
+		fontSize: 16
 	},
 	// media post styles
 	mediaPostContainer: {
 		padding: 12
 	},
 	mediaPostTextContentContainer: {
-		backgroundColor: '#fff',
-		padding: 10
+		backgroundColor: colors.background_light,
+		padding: 15
 	},
 	mediaPostText: {
-		fontSize: 20
+		color: colors.foreground_dark,
+		fontFamily: fonts.semibold,
+		fontSize: 16
 	},
 	mediaPostDate: {
-		textAlign: 'right'
+		color: colors.helper,
+		fontFamily: fonts.regular,
+		fontSize: 12
+	},
+	mediaPostVideoContainer: {
+		overflow: 'hidden'
 	},
 	mediaPostVideo: {
 		aspectRatio: 1,
@@ -43,7 +55,9 @@ const styles = StyleSheet.create({
 	},
 	// empty feed styles
 	emptyFeedText: {
-		fontSize: 16,
+		color: colors.foreground_light,
+		fontFamily: fonts.semibold,
+		fontSize: 18,
 		marginTop: 10,
 		textAlign: 'center'
 	}

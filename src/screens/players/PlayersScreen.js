@@ -31,7 +31,7 @@ export default class PlayersScreen extends React.Component {
 		return (
 			<PatternBackground>
 				<View>
-					<SocialFeed group="players" showAuthor={true} />
+					<SocialFeed group="players" mediaPostDatePosition="header" showHeader={true} />
 				</View>
 			</PatternBackground>
 		);

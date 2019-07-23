@@ -1,6 +1,14 @@
 import fonts from '../fonts';
 
 const palette = {
+	cardBorderTopRadius: {
+		borderTopLeftRadius: 20,
+		borderTopRightRadius: 20
+	},
+	cardBorderBottomRadius: {
+		borderBottomLeftRadius: 20,
+		borderBottomRightRadius: 20
+	},
 	commonButton: {
 		borderRadius: 20,
 		iconSize: 16,

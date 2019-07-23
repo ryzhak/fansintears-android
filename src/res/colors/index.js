@@ -5,7 +5,8 @@ const colors = {
 	helper_light: '#f2f2f2',
 	foreground_light: '#fff',
 	foreground_dark: '#000',
-	primary: '#fb8b23'
+	primary: '#fb8b23',
+	secondary: '#fb5623'
 };
 
 export default colors;

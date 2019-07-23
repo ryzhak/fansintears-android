@@ -39,7 +39,7 @@ export default class MemesScreen extends React.Component {
 		return (
 			<PatternBackground>
 				<View>
-					<SocialFeed group="memes" showAuthor={false} />
+					<SocialFeed group="memes" mediaPostDatePosition="footer" showHeader={false} />
 				</View>
 			</PatternBackground>
 		);

@@ -6,7 +6,10 @@ import AutoHeightImage from 'react-native-auto-height-image';
 import Video from 'react-native-video';
 
 import FansInTearsApi from 'library/networking/FansInTearsApi';
+import palette from 'res/palette';
+import strings from 'res/strings';
 import styles from './styles';
+import colors from '../../../res/colors';
 
 /**
  * Component renders media posts by group
@@ -18,7 +21,7 @@ export default class SocialFeed extends React.Component {
 	 */
 	static defaultProps = {
 		group: 'memes',
-		showAuthor: true
+		showHeader: true
 	};
 
 	/**
@@ -82,28 +85,51 @@ export default class SocialFeed extends React.Component {
 		const mediaPost = obj.item;
 		const isLast = obj.index === this.state.mediaPosts.length - 1;
 		const hasMore = this.state.currentPage < this.state.lastPage;
+		// disable top border radius for media when header is shown
+		let mediaPostStyle = {};
+		if(this.props.showHeader) {
+			mediaPostStyle = {
+				borderTopLeftRadius: 0,
+				borderTopRightRadius: 0
+			};
+		}
+		// disable bottom border radius for text container on last card
+		let lastTextContainerStyle = {};
+		if(isLast && hasMore) {
+			lastTextContainerStyle = {
+				borderBottomLeftRadius: 0,
+				borderBottomRightRadius: 0
+			};
+		}
+		// media post date component (can be used in header or footer)
+		const MediaPostDate = () => <Text style={styles.mediaPostDate}>{ moment.unix(mediaPost.createdAt).format('DD MMMM YYYY hh:mm A') }</Text>;
 		return (
 			<View style={styles.mediaPostContainer}>
-				{ this.props.showAuthor && 
-					<View style={styles.authorContainer}>
+				{ this.props.showHeader && 
+					<View style={{...styles.authorContainer, ...palette.cardBorderTopRadius}}>
 						{ mediaPost.profileAvatar && 
 							<Image style={styles.authorAvatar} source={{uri: mediaPost.profileAvatar}} />
 						}
-						<Text style={styles.authorName}>{ mediaPost.profileFullName }</Text>
+						<View style={styles.headerTextContainer}>
+							<Text style={styles.authorName}>{ mediaPost.profileFullName }</Text>
+							{ this.props.mediaPostDatePosition === 'header' && <MediaPostDate /> }
+						</View>
 					</View>
 				}
-				<View style={styles.mediaPostTextContentContainer}>
-					<Text style={styles.mediaPostText}>{ mediaPost.text }</Text>
-					<Text style={styles.mediaPostDate}>{ moment.unix(mediaPost.createdAt).format('DD.MM HH:mm') }</Text>
-				</View>
 				{ mediaPost.type === 'photo' &&
-					<AutoHeightImage width={this.state.deviceWidth - styles.mediaPostContainer.padding * 2} source={{uri: mediaPost.url}} />
+					<AutoHeightImage style={{...palette.cardBorderTopRadius, ...mediaPostStyle}} width={this.state.deviceWidth - styles.mediaPostContainer.padding * 2} source={{uri: mediaPost.url}} />
 				}
 				{ mediaPost.type === 'video' &&
-					<Video style={styles.mediaPostVideo} source={{uri: mediaPost.url}} resizeMode='stretch' controls={true} paused={true} />
+					<View style={{...styles.mediaPostVideoContainer, ...palette.cardBorderTopRadius, ...mediaPostStyle}}>
+						<Video style={styles.mediaPostVideo} source={{uri: mediaPost.url}} resizeMode='stretch' controls={true} paused={true} />
+					</View>
 				}
+				<View style={{...styles.mediaPostTextContentContainer, ...palette.cardBorderBottomRadius, ...lastTextContainerStyle}}>
+					<Text style={styles.mediaPostText}>{ mediaPost.text }</Text>
+					{ this.props.mediaPostDatePosition === 'footer' && <MediaPostDate /> }
+				</View>
 				{ isLast && hasMore && !this.state.loading &&
-					<Button onPress={this.onLoadMorePress} title="Load More" color="#e54f38" />
+					<Button onPress={this.onLoadMorePress} title={strings.components.socialFeed.loadMore} color={colors.secondary} />
 				}
 			</View>
 		);
@@ -121,8 +147,8 @@ export default class SocialFeed extends React.Component {
 					keyExtractor={(item) => item._id}
 					renderItem={this.renderMediaPost}
 				/>
-				{!this.state.loading && this.state.mediaPosts.length === 0 && <Text style={styles.emptyFeedText}>No feed available :(</Text>}
-				{this.state.loading && <ActivityIndicator style={styles.loader} animating={this.state.loading} size="large" color="#e54f38" />}
+				{!this.state.loading && this.state.mediaPosts.length === 0 && <Text style={styles.emptyFeedText}>{strings.components.socialFeed.empty}</Text>}
+				{this.state.loading && <ActivityIndicator style={styles.loader} animating={this.state.loading} size="large" color={colors.foreground_light} />}
 			</View>
 		);
 	}
@@ -134,6 +160,8 @@ export default class SocialFeed extends React.Component {
 SocialFeed.propTypes = {
 	// social media group, available values: 'memes', 'players'
 	group: PropTypes.oneOf(['memes', 'players']).isRequired,
-	// whether to show author avatar with full name
-	showAuthor: PropTypes.bool.isRequired
+	// position of media post creation date
+	mediaPostDatePosition: PropTypes.oneOf(['header', 'footer']).isRequired,
+	// whether to show header section with avatar(photo), account name and media post date
+	showHeader: PropTypes.bool.isRequired
 };
